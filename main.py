@@ -8,8 +8,6 @@ from keys import keys
 
 class NoteSequenceGenerator:
     def generate_note_sequence(self, key, scale, length):
-        print(scales)
-        print(scale)
         note_choices = random.choices(scales[scale], k=length)
         return [keys[key]]+[keys[key] + choice for choice in note_choices]
 
@@ -25,7 +23,6 @@ class Looper():
     
     def _play_note(self):
         for note in self._notes:
-            print(note)
             self._out_port.send(mido.Message('note_on', note=note, velocity=100))
             sleep(0.2)
             self._out_port.send(mido.Message('note_off', note=note))
