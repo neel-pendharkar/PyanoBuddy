@@ -1,6 +1,8 @@
 scales = {
     'MAJOR_CHORD': [0, 4, 7, 12],
     'MINOR_CHORD': [0, 3, 7, 12],
+    'MINOR_7_CHORD': [0, 3, 7, 10, 12],
+
     # --- Western ---
     'MAJOR': [0, 2, 4, 5, 7, 9, 11, 12],
     'NATURAL_MINOR': [0, 2, 3, 5, 7, 8, 10, 12],

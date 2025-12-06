@@ -3,22 +3,15 @@ import mido, random
 from time import sleep, time
 
 from scales import scales
+from keys import keys
 
-keys = {
-    'C': 60,
-    'C#': 61,
-    'D': 62,
-    'D#': 63,
-    'E': 64,
-    'F': 65,
-    'F#': 66,
-    'G': 67,
-    'G#': 68,
-    'A': 69,
-    'A#': 70,
-    'B': 71
-}
-    
+
+class NoteSequenceGenerator:
+    def generate_note_sequence(self, key, scale, length):
+        print(scales)
+        print(scale)
+        note_choices = random.choices(scales[scale], k=length)
+        return [keys[key]]+[keys[key] + choice for choice in note_choices]
 
 class Looper():
     def __init__(self):
@@ -28,11 +21,11 @@ class Looper():
         self._note_count = 4
         self._timer = 5
         self._max_note_count = 1
-        self._context = True
-        
+        self._generator = NoteSequenceGenerator()
     
     def _play_note(self):
         for note in self._notes:
+            print(note)
             self._out_port.send(mido.Message('note_on', note=note, velocity=100))
             sleep(0.2)
             self._out_port.send(mido.Message('note_off', note=note))
@@ -60,13 +53,11 @@ class Looper():
                 self._max_note_count +=1
                 print(f'Streak reached! Max count is now {self._max_note_count}')
 
-            root = keys['C']
-            scale = scales['MAJOR_CHORD']
+            key = 'C'
+            scale = 'MINOR_7_CHORD'
             self._note_count = random.choice(range(1,self._max_note_count+1))
-            self._notes = random.choices([root+i for i in scale], k=self._note_count)
-            if self._context:
-                self._note_count +=1
-                self._notes = [root]+self._notes
+            
+            self._notes = self._generator.generate_note_sequence(key, scale, self._note_count)
             match = False
             while not match:
                 self._play_note()
