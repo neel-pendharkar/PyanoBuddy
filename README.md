@@ -3,7 +3,7 @@ Connect your synth to Midi. First midi input is used.
 Need latest python
 ```
 pip install -r requirements.txt
-python main.py
+pyinstaller --onefile main.py --hidden-import=mido.backends.rtmidi
 ```
 
 Try to copy the machine.
