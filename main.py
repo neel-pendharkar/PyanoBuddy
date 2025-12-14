@@ -1,6 +1,7 @@
 import mido, random
 from time import sleep, time
 import rtmidi
+import argparse
 
 from NoteSequenceGenerator import NoteSequenceGenerator
 
@@ -35,7 +36,7 @@ class Looper():
         print('Time up')
         return False
     
-    def run_loop(self):
+    def run_loop(self, key = 'C', scale = 'MAJOR'):
         self._streak = 0
         while True:
             if(self._streak > 20):
@@ -43,8 +44,8 @@ class Looper():
                 self._max_note_count +=1
                 print(f'Streak reached! Max count is now {self._max_note_count}')
 
-            key = 'C'
-            scale = 'MINOR_7_CHORD'
+            key = key
+            scale = scale
             self._note_count = random.choice(range(1,self._max_note_count+1))
             
             self._notes = self._generator.generate_note_sequence(key, scale, self._note_count)
@@ -61,12 +62,26 @@ class Looper():
                 print(f'Streak: {self._streak}')
                 
                 sleep(0.5)
-def main():
-        
-
+def main():        
+    args = parse_args()
     looper = Looper()
-    looper.run_loop()
+    looper.run_loop(args.key, args.scale)
     
+def parse_args():
+    parser = argparse.ArgumentParser(
+        description="PyanoBuddy. Connect your piano and play what's playing."
+    )
+    parser.add_argument(
+        "--key",
+        help="Key to practice. Eg. C",
+        default = 'C'
+    )
+    parser.add_argument(
+        "--scale",
+        help="Scale to practice Eg. POWER_CHORD",
+        default = 'POWER_CHORD'
+    )
+    return parser.parse_args()
 
 if __name__=='__main__':
     main()

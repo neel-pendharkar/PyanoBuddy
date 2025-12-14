@@ -1,4 +1,6 @@
 scales = {
+    'POWER_CHORD': [0, 7, 12],
+
     'MAJOR_CHORD': [0, 4, 7, 12],
     'MINOR_CHORD': [0, 3, 7, 12],
     'MINOR_7_CHORD': [0, 3, 7, 10, 12],
